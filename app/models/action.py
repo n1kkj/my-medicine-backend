@@ -30,3 +30,5 @@ class Action(models.Model):
 
     class Meta:
         db_table = 'actions_table'
+        verbose_name = _('Привычка')
+        verbose_name_plural = _('Привычки')
