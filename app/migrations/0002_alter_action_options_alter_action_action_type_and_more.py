@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('app', '0001_initial'),
     ]
@@ -24,7 +23,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='action',
             name='course',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='app.course', verbose_name='Связанный курс'),
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to='app.course',
+                verbose_name='Связанный курс',
+            ),
         ),
         migrations.AlterField(
             model_name='action',
@@ -49,7 +54,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='action',
             name='interval_unit',
-            field=models.CharField(blank=True, choices=[('days', 'Дни'), ('weeks', 'Недели'), ('months', 'Месяцы')], max_length=10, null=True, verbose_name='Единица измерения интервала'),
+            field=models.CharField(
+                blank=True,
+                choices=[('days', 'Дни'), ('weeks', 'Недели'), ('months', 'Месяцы')],
+                max_length=10,
+                null=True,
+                verbose_name='Единица измерения интервала',
+            ),
         ),
         migrations.AlterField(
             model_name='action',
@@ -84,7 +95,18 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='action',
             name='schedule_type',
-            field=models.CharField(blank=True, choices=[('interval', 'По интервалу'), ('weekly', 'Еженедельно'), ('cyclic', 'Циклически'), ('single', 'Однократно')], max_length=20, null=True, verbose_name='Тип расписания'),
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ('interval', 'По интервалу'),
+                    ('weekly', 'Еженедельно'),
+                    ('cyclic', 'Циклически'),
+                    ('single', 'Однократно'),
+                ],
+                max_length=20,
+                null=True,
+                verbose_name='Тип расписания',
+            ),
         ),
         migrations.AlterField(
             model_name='action',
@@ -114,7 +136,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='action',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'
+            ),
         ),
         migrations.AlterField(
             model_name='bloodpressuredata',
@@ -129,7 +153,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='bloodpressuredata',
             name='diastolic',
-            field=models.IntegerField(help_text='Нижнее значение артериального давления', verbose_name='Диастолическое давление'),
+            field=models.IntegerField(
+                help_text='Нижнее значение артериального давления', verbose_name='Диастолическое давление'
+            ),
         ),
         migrations.AlterField(
             model_name='bloodpressuredata',
@@ -139,12 +165,16 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='bloodpressuredata',
             name='systolic',
-            field=models.IntegerField(help_text='Верхнее значение артериального давления', verbose_name='Систолическое давление'),
+            field=models.IntegerField(
+                help_text='Верхнее значение артериального давления', verbose_name='Систолическое давление'
+            ),
         ),
         migrations.AlterField(
             model_name='bloodpressuredata',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'
+            ),
         ),
         migrations.AlterField(
             model_name='course',
@@ -154,12 +184,16 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='course',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'
+            ),
         ),
         migrations.AlterField(
             model_name='coursemedicine',
             name='course',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.course', verbose_name='Курс лечения'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to='app.course', verbose_name='Курс лечения'
+            ),
         ),
         migrations.AlterField(
             model_name='coursemedicine',
@@ -169,7 +203,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='coursemedicine',
             name='medicine',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.medicine', verbose_name='Лекарство'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to='app.medicine', verbose_name='Лекарство'
+            ),
         ),
         migrations.AlterField(
             model_name='coursemedicine',
@@ -179,12 +215,20 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='coursemedicine',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'
+            ),
         ),
         migrations.AlterField(
             model_name='measurement',
             name='course',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='app.course', verbose_name='Связанный курс'),
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to='app.course',
+                verbose_name='Связанный курс',
+            ),
         ),
         migrations.AlterField(
             model_name='measurement',
@@ -209,7 +253,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='measurement',
             name='interval_unit',
-            field=models.CharField(blank=True, choices=[('days', 'Дни'), ('weeks', 'Недели'), ('months', 'Месяцы')], max_length=10, null=True, verbose_name='Единица интервала'),
+            field=models.CharField(
+                blank=True,
+                choices=[('days', 'Дни'), ('weeks', 'Недели'), ('months', 'Месяцы')],
+                max_length=10,
+                null=True,
+                verbose_name='Единица интервала',
+            ),
         ),
         migrations.AlterField(
             model_name='measurement',
@@ -234,7 +284,18 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='measurement',
             name='schedule_type',
-            field=models.CharField(blank=True, choices=[('interval', 'По интервалу'), ('weekly', 'Еженедельно'), ('cyclic', 'Циклически'), ('single', 'Однократно')], max_length=20, null=True, verbose_name='Тип расписания'),
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ('interval', 'По интервалу'),
+                    ('weekly', 'Еженедельно'),
+                    ('cyclic', 'Циклически'),
+                    ('single', 'Однократно'),
+                ],
+                max_length=20,
+                null=True,
+                verbose_name='Тип расписания',
+            ),
         ),
         migrations.AlterField(
             model_name='measurement',
@@ -259,7 +320,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='measurement',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'
+            ),
         ),
         migrations.AlterField(
             model_name='medicine',
@@ -294,7 +357,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='medicine',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'
+            ),
         ),
         migrations.AlterField(
             model_name='pulsedata',
@@ -319,7 +384,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='pulsedata',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'
+            ),
         ),
         migrations.AlterField(
             model_name='pulsedata',
@@ -329,7 +396,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='reminder',
             name='course',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='app.course', verbose_name='Связанный курс'),
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to='app.course',
+                verbose_name='Связанный курс',
+            ),
         ),
         migrations.AlterField(
             model_name='reminder',
@@ -359,7 +432,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='reminder',
             name='interval_unit',
-            field=models.CharField(blank=True, choices=[('days', 'Дни'), ('weeks', 'Недели'), ('months', 'Месяцы')], max_length=10, null=True, verbose_name='Единица интервала'),
+            field=models.CharField(
+                blank=True,
+                choices=[('days', 'Дни'), ('weeks', 'Недели'), ('months', 'Месяцы')],
+                max_length=10,
+                null=True,
+                verbose_name='Единица интервала',
+            ),
         ),
         migrations.AlterField(
             model_name='reminder',
@@ -379,7 +458,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='reminder',
             name='medicine',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='app.medicine', verbose_name='Связанное лекарство'),
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to='app.medicine',
+                verbose_name='Связанное лекарство',
+            ),
         ),
         migrations.AlterField(
             model_name='reminder',
@@ -389,12 +474,26 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='reminder',
             name='reminder_type',
-            field=models.CharField(choices=[('tablet', 'Лекарство'), ('action', 'Действие'), ('measurement', 'Измерение')], default='tablet', max_length=20, verbose_name='Тип напоминания'),
+            field=models.CharField(
+                choices=[('tablet', 'Лекарство'), ('action', 'Действие'), ('measurement', 'Измерение')],
+                default='tablet',
+                max_length=20,
+                verbose_name='Тип напоминания',
+            ),
         ),
         migrations.AlterField(
             model_name='reminder',
             name='schedule_type',
-            field=models.CharField(choices=[('interval', 'По интервалу'), ('weekly', 'Еженедельно'), ('cyclic', 'Циклически'), ('single', 'Однократно')], max_length=20, verbose_name='Тип расписания'),
+            field=models.CharField(
+                choices=[
+                    ('interval', 'По интервалу'),
+                    ('weekly', 'Еженедельно'),
+                    ('cyclic', 'Циклически'),
+                    ('single', 'Однократно'),
+                ],
+                max_length=20,
+                verbose_name='Тип расписания',
+            ),
         ),
         migrations.AlterField(
             model_name='reminder',
@@ -424,7 +523,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='reminder',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'
+            ),
         ),
         migrations.AlterField(
             model_name='reminderstatus',
@@ -439,12 +540,16 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='reminderstatus',
             name='reminder',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.reminder', verbose_name='Напоминание'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to='app.reminder', verbose_name='Напоминание'
+            ),
         ),
         migrations.AlterField(
             model_name='reminderstatus',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'
+            ),
         ),
         migrations.AlterField(
             model_name='stepsdata',
@@ -464,7 +569,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='stepsdata',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'
+            ),
         ),
         migrations.AlterField(
             model_name='user',
@@ -499,6 +606,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='userhealthdata',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'
+            ),
         ),
     ]

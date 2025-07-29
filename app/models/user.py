@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class User(AbstractUser):
+    surname = models.CharField(_('фамилия'), max_length=50, null=True, blank=True)
     phone = models.CharField(_('Номер телефона'), max_length=20, unique=True, null=True, blank=True)
     subscribe = models.BooleanField(_('Подписка'), default=False)
     is_logged_in = models.BooleanField(_('Залогинен'), default=False)
