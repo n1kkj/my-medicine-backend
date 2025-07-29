@@ -6,10 +6,10 @@ from app.models.user import User
 
 
 class ReminderStatus(models.Model):
-    reminder = models.ForeignKey(Reminder, on_delete=models.CASCADE)
-    date = models.DateField()
-    is_completed = models.BooleanField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reminder = models.ForeignKey(_('Напоминание'), Reminder, on_delete=models.CASCADE)
+    date = models.DateField(_('Дата'))
+    is_completed = models.BooleanField(_('Закончен'))
+    user = models.ForeignKey(User, verbose_name=_('Пользователь'), on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'reminder_statuses'

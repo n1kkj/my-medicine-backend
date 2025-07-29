@@ -5,12 +5,12 @@ from app.models.user import User
 
 
 class PulseData(models.Model):
-    date = models.DateTimeField()
-    value = models.IntegerField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    systolic = models.IntegerField(null=True, blank=True)
-    diastolic = models.IntegerField(null=True, blank=True)
-    comment = models.TextField(null=True, blank=True)
+    date = models.DateTimeField(_('Дата и время измерения'))
+    value = models.IntegerField(_('Значение пульса'))
+    user = models.ForeignKey(User, verbose_name=_('Пользователь'), on_delete=models.CASCADE)
+    systolic = models.IntegerField(_('Систолическое давление'), null=True, blank=True)
+    diastolic = models.IntegerField(_('Диастолическое давление'), null=True, blank=True)
+    comment = models.TextField(_('Комментарий'), null=True, blank=True)
 
     class Meta:
         db_table = 'pulse_data'

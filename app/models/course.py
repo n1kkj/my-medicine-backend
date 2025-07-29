@@ -5,8 +5,8 @@ from app.models.user import User
 
 
 class Course(models.Model):
-    name = models.CharField(max_length=255)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(_('Название'), max_length=255)
+    user = models.ForeignKey(User, verbose_name=_('Пользователь'), on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'courses_table'

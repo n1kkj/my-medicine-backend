@@ -5,10 +5,10 @@ from app.models.user import User
 
 
 class UserHealthData(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    steps = models.CharField(max_length=255, null=True, blank=True)
-    heart_rate = models.CharField(max_length=255, null=True, blank=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, verbose_name=_('Пользователь'), on_delete=models.CASCADE)
+    steps = models.CharField(_('Количество шагов'), max_length=255, null=True, blank=True)
+    heart_rate = models.CharField(_('Пульс'), max_length=255, null=True, blank=True)
+    timestamp = models.DateTimeField(_('Дата и время'), auto_now_add=True)
 
     class Meta:
         db_table = 'user_health_data'
