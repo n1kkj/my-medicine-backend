@@ -78,7 +78,7 @@ class AuthService:
                 email=email,
                 password=password,
                 is_active=False,
-                name=kwargs.get('name'),
+                first_name=kwargs.get('name'),
                 surname=kwargs.get('surname'),
                 phone=kwargs.get('phone'),
                 subscribe=kwargs.get('subscribe', False),
