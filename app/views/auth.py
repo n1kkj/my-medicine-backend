@@ -24,15 +24,13 @@ class AuthViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['get'])
     def check_auth(self, request):
         """Проверка статуса входа пользователя"""
-        res = AuthService.is_logged_in(request)
+        return AuthService.is_logged_in(request)
 
     @swagger_auto_schema(method='post', responses={200: SuccessResponseSerializer, 400: ErrorResponseSerializer})
     @action(detail=False, methods=['post'])
     def logout(self, request):
         """Выход из системы"""
-        if not AuthService.logout(request):
-            return Response({'error': 'logout error'}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({'success': True})
+        return AuthService.logout(request)
 
     @swagger_auto_schema(
         method='post',

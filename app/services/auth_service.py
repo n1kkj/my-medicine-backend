@@ -38,10 +38,10 @@ class AuthService:
         """Выход из системы"""
         try:
             auth_logout(request)
-            return True
+            return {'success': True}
         except Exception as e:
             logger.error(f'Error during logout: {e}')
-            return False
+            return {'success': False}
 
     @staticmethod
     def login(request, email, password):
