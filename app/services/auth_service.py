@@ -47,9 +47,7 @@ class AuthService:
     def login(request, email, password):
         """Вход в систему"""
         try:
-            if not (email_user := User.objects.filter(email=email).first()):
-                raise Exception('Неверные учетные данные')
-            user = authenticate(request, username=email_user.username, password=password)
+            user = authenticate(request, username=email, password=password)
             if user is not None:
                 auth_login(request, user)
 
