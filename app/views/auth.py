@@ -67,7 +67,7 @@ class AuthViewSet(viewsets.ViewSet):
         email = serializer.validated_data.pop('email')
         password = serializer.validated_data.pop('password')
 
-        return AuthService.register(email, password, **serializer.validated_data)
+        return Response(AuthService.register(email, password, **serializer.validated_data))
 
     @swagger_auto_schema(
         method='post',
