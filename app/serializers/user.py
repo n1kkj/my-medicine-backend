@@ -23,10 +23,6 @@ class RegisterSerializer(serializers.Serializer):
     subscribe = serializers.BooleanField(required=False, default=False)
 
 
-class PasswordResetSerializer(serializers.Serializer):
-    email = serializers.EmailField(required=True)
-
-
 class CheckAuthResponseSerializer(serializers.Serializer):
     is_authenticated = serializers.BooleanField()
     id = serializers.IntegerField(required=False)
@@ -47,3 +43,17 @@ class ErrorResponseSerializer(serializers.Serializer):
 
 class EmailVerifiedResponseSerializer(serializers.Serializer):
     is_verified = serializers.BooleanField()
+
+
+class EmailSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+
+class PasswordResetSerializer(serializers.Serializer):
+    password = serializers.CharField(write_only=True, min_length=8)
+    confirm_password = serializers.CharField(write_only=True)
+
+    def validate(self, data):
+        if data['password'] != data['confirm_password']:
+            raise serializers.ValidationError("Пароли не совпадают")
+        return data

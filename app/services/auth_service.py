@@ -1,4 +1,6 @@
-from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from urllib.parse import urljoin
+
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.utils.http import urlsafe_base64_encode
@@ -14,41 +16,27 @@ logger = logging.getLogger(__name__)
 
 class AuthService:
     @staticmethod
-    def is_logged_in(request):
+    def is_logged_in(email):
         """Проверка статуса входа пользователя"""
-        try:
-            if request.user.is_authenticated:
-                user = User.objects.get(pk=request.user.pk)
-                return {
-                    'is_authenticated': True,
-                    'user_id': user.id,
-                    'email': user.email,
-                    'name': user.name,
-                    'surname': user.surname,
-                    'phone': user.phone,
-                    'subscribe': user.subscribe,
-                }
+        user = User.objects.filter(username=email).first()
+        if (not user) or (not user.is_active):
             return {'is_authenticated': False}
-        except Exception as e:
-            logger.error(f'Error checking login status: {e}')
-            return {'is_authenticated': False}
-
-    @staticmethod
-    def logout(request):
-        """Выход из системы"""
-        try:
-            auth_logout(request)
-            return {'success': True}
-        except Exception as e:
-            logger.error(f'Error during logout: {e}')
-            return {'success': False}
+        return {
+            'is_authenticated': True,
+            'user_id': user.id,
+            'email': user.email,
+            'surname': user.surname,
+            'phone': user.phone,
+            'subscribe': user.subscribe,
+        }
 
     @staticmethod
     def login(request, email, password):
         """Вход в систему"""
         try:
-            user = authenticate(request, username=email, password=password)
-            if user is not None:
+            user = User.objects.filter(username=email).first()
+
+            if user is not None and user.check_password(password):
                 auth_login(request, user)
 
                 if not user.is_active:
@@ -59,7 +47,6 @@ class AuthService:
                     'success': True,
                     'user_id': user.id,
                     'email': user.email,
-                    'name': user.name,
                     'surname': user.surname,
                     'phone': user.phone,
                     'subscribe': user.subscribe,
@@ -76,13 +63,14 @@ class AuthService:
             user = User.objects.create_user(
                 username=email,
                 email=email,
-                password=password,
                 is_active=False,
                 first_name=kwargs.get('name'),
                 surname=kwargs.get('surname'),
                 phone=kwargs.get('phone'),
                 subscribe=kwargs.get('subscribe', False),
             )
+            user.set_password(password)
+            user.save()
 
             AuthService._send_verification_email(user)
 
@@ -97,9 +85,9 @@ class AuthService:
         try:
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
-
+            url = urljoin(settings.BASE_URL, f'/api/auth/verify-email/{uid}/{token}/')
             subject = 'Подтвердите ваш email'
-            message = f'Для подтверждения email перейдите по ссылке: {settings.BASE_URL}/verify-email/{uid}/{token}/'
+            message = f'Для подтверждения email перейдите по ссылке: {url}'
             send_mail(
                 subject,
                 message,
@@ -120,7 +108,8 @@ class AuthService:
             uid = urlsafe_base64_encode(force_bytes(user.pk))
 
             subject = 'Сброс пароля'
-            message = f'Для сброса пароля перейдите по ссылке: {settings.BASE_URL}/reset-password/{uid}/{token}/'
+            url = urljoin(settings.BASE_URL, f'/api/auth/reset-password-form/{uid}/{token}/')
+            message = f'Для сброса пароля перейдите по ссылке: {url}'
             send_mail(
                 subject,
                 message,
@@ -137,14 +126,20 @@ class AuthService:
             raise
 
     @staticmethod
-    def is_email_verified(request):
+    def is_email_verified(email: str):
         """Проверка подтверждения email"""
-        return request.user.is_authenticated and request.user.is_active
+        user = User.objects.filter(username=email).first()
+        if not user:
+            return False
+        return user.is_active
 
     @staticmethod
-    def resend_verification_email(request):
+    def resend_verification_email(email):
         """Повторная отправка письма с подтверждением"""
-        if request.user.is_authenticated and not request.user.is_active:
-            AuthService._send_verification_email(request.user)
+        user = User.objects.filter(username=email).first()
+        if not user:
+            return False
+        if not user.is_active:
+            AuthService._send_verification_email(user)
             return True
         raise Exception('Email уже подтвержден или пользователь не аутентифицирован')
