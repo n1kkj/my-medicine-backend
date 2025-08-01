@@ -55,5 +55,5 @@ class PasswordResetSerializer(serializers.Serializer):
 
     def validate(self, data):
         if data['password'] != data['confirm_password']:
-            raise serializers.ValidationError("Пароли не совпадают")
+            raise serializers.ValidationError('Пароли не совпадают')
         return data

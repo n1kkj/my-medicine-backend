@@ -1,12 +1,11 @@
 from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import render
 from django.utils.http import urlsafe_base64_decode
-from drf_yasg.inspectors.field import serializer_field_to_basic_type
+from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets, status
-from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
-from rest_framework.decorators import action, renderer_classes
+from rest_framework.decorators import action
 import logging
 
 from app.models import User
@@ -28,11 +27,11 @@ logger = logging.getLogger(__name__)
 
 class AuthViewSet(viewsets.ViewSet):
     @swagger_auto_schema(
-        method='get',
+        method='post',
         request_body=EmailSerializer,
         responses={200: CheckAuthResponseSerializer, 400: ErrorResponseSerializer},
     )
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=['post'])
     def check_auth(self, request):
         """Проверка статуса входа пользователя"""
         serializer = EmailSerializer(data=request.data)
@@ -120,11 +119,11 @@ class AuthViewSet(viewsets.ViewSet):
         return Response()
 
     @swagger_auto_schema(
-        method='get',
+        method='post',
         request_body=EmailSerializer,
         responses={200: EmailVerifiedResponseSerializer, 400: ErrorResponseSerializer},
     )
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=['post'])
     def check_email_verified(self, request):
         """Проверка подтверждения email"""
         serializer = EmailSerializer(data=request.data)
@@ -134,7 +133,11 @@ class AuthViewSet(viewsets.ViewSet):
         is_verified = AuthService.is_email_verified(email)
         return Response({'is_verified': is_verified})
 
-    @swagger_auto_schema(method='post',         request_body=EmailSerializer,responses={200: SuccessResponseSerializer, 400: ErrorResponseSerializer})
+    @swagger_auto_schema(
+        method='post',
+        request_body=EmailSerializer,
+        responses={200: SuccessResponseSerializer, 400: ErrorResponseSerializer},
+    )
     @action(detail=False, methods=['post'])
     def resend_verification(self, request):
         """Повторная отправка письма с подтверждением"""
@@ -164,25 +167,16 @@ class AuthViewSet(viewsets.ViewSet):
             uid = urlsafe_base64_decode(uidb64).decode()
             user = User.objects.get(pk=uid)
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-            return Response(
-                {'error': 'Неверная ссылка для сброса пароля'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({'error': 'Неверная ссылка для сброса пароля'}, status=status.HTTP_400_BAD_REQUEST)
 
         if not default_token_generator.check_token(user, token):
-            return Response(
-                {'error': 'Неверный токен для сброса пароля'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({'error': 'Неверный токен для сброса пароля'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Устанавливаем новый пароль
         user.set_password(serializer.validated_data['password'])
         user.save()
 
-        return Response(
-            {'success': True, 'message': 'Пароль успешно изменен'},
-            status=status.HTTP_200_OK
-        )
+        return Response({'success': True, 'message': 'Пароль успешно изменен'}, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['get'], url_path='reset-password-form/(?P<uidb64>[^/.]+)/(?P<token>[^/.]+)')
     def reset_password_form(self, request, uidb64, token):
@@ -199,10 +193,5 @@ class AuthViewSet(viewsets.ViewSet):
         return render(
             request,
             'password_reset_form.html',
-            {
-                'uidb64': uidb64,
-                'token': token,
-                'error': error,
-                'valid_link': valid_link
-            }
+            {'uidb64': uidb64, 'token': token, 'error': error, 'valid_link': valid_link},
         )
