@@ -4,11 +4,11 @@ from django.utils.translation import gettext_lazy as _
 
 class Medicine(models.Model):
     id = models.BigAutoField(primary_key=True)
-    image_path = models.CharField(_('Путь к изображению'), max_length=255, blank=True, null=True, db_column='ImagePath')
+    image_path = models.TextField(_('Путь к изображению'), max_length=255, blank=True, null=True, db_column='ImagePath')
     name = models.TextField(_('Название лекарства'), blank=True, null=True, db_column='Name')
     manufacturer = models.TextField(_('Производитель'), blank=True, null=True, db_column='Manufacturer')
-    origin_country = models.CharField(_('Страна происхождения'), max_length=255, blank=True, null=True, db_column='OriginCountry')
-    release_form = models.CharField(_('Форма выпуска'), max_length=255, blank=True, null=True, db_column='ReleaseForm')
+    origin_country = models.TextField(_('Страна происхождения'), max_length=255, blank=True, null=True, db_column='OriginCountry')
+    release_form = models.TextField(_('Форма выпуска'), max_length=255, blank=True, null=True, db_column='ReleaseForm')
     active_ingredients = models.TextField(_('Активные ингредиенты'), blank=True, null=True, db_column='ActiveIngredients')
     vacation_procedure = models.TextField(_('Порядок отпуска'), blank=True, null=True, db_column='VacationProcedure')
     quantity_in_package = models.TextField(_('Количество в упаковке'), blank=True, null=True, db_column='QuantityInPackage')
