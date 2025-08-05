@@ -8,3 +8,4 @@ from .reminder import ReminderAdmin
 from .steps_data import StepsDataAdmin
 from .user import CustomUserAdmin
 from .user_health_data import HealthDataAdmin
+from .medicine import MedicineAdmin
