@@ -12,7 +12,7 @@ class Medicine(models.Model):
     active_ingredients = models.TextField(_('Активные ингредиенты'), blank=True, null=True, db_column='ActiveIngredients')
     vacation_procedure = models.TextField(_('Порядок отпуска'), blank=True, null=True, db_column='VacationProcedure')
     quantity_in_package = models.TextField(_('Количество в упаковке'), blank=True, null=True, db_column='QuantityInPackage')
-    barcodes = models.BigIntegerField(_('Штрих-коды'), blank=True, null=True, db_column='Barcodes')
+    barcodes = models.TextField(_('Штрих-коды'), blank=True, null=True, db_column='Barcodes')
     composition = models.TextField(_('Состав'), blank=True, null=True, db_column='Composition')
     description = models.TextField(_('Описание'), blank=True, null=True, db_column='Description')
     pharmacological_effect = models.TextField(_('Фармакологическое действие'), blank=True, null=True, db_column='PharmacologicalEffect')
