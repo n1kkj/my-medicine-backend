@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('app', '0004_remove_medicine_package_count_remove_medicine_unit_and_more'),
     ]
@@ -13,7 +12,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='medicine',
             name='active_ingredients',
-            field=models.TextField(blank=True, db_column='ActiveIngredients', null=True, verbose_name='Активные ингредиенты'),
+            field=models.TextField(
+                blank=True, db_column='ActiveIngredients', null=True, verbose_name='Активные ингредиенты'
+            ),
         ),
         migrations.AlterField(
             model_name='medicine',
@@ -28,7 +29,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='medicine',
             name='contraindications',
-            field=models.TextField(blank=True, db_column='Contraindications', null=True, verbose_name='Противопоказания'),
+            field=models.TextField(
+                blank=True, db_column='Contraindications', null=True, verbose_name='Противопоказания'
+            ),
         ),
         migrations.AlterField(
             model_name='medicine',
@@ -38,12 +41,16 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='medicine',
             name='drugs_interaction',
-            field=models.TextField(blank=True, db_column='DrugsInteraction', null=True, verbose_name='Взаимодействие с другими препаратами'),
+            field=models.TextField(
+                blank=True, db_column='DrugsInteraction', null=True, verbose_name='Взаимодействие с другими препаратами'
+            ),
         ),
         migrations.AlterField(
             model_name='medicine',
             name='image_path',
-            field=models.CharField(blank=True, db_column='ImagePath', max_length=255, null=True, verbose_name='Путь к изображению'),
+            field=models.CharField(
+                blank=True, db_column='ImagePath', max_length=255, null=True, verbose_name='Путь к изображению'
+            ),
         ),
         migrations.AlterField(
             model_name='medicine',
@@ -58,7 +65,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='medicine',
             name='method_application_dosage',
-            field=models.TextField(blank=True, db_column='MethodApplicationDosage', null=True, verbose_name='Способ применения и дозы'),
+            field=models.TextField(
+                blank=True, db_column='MethodApplicationDosage', null=True, verbose_name='Способ применения и дозы'
+            ),
         ),
         migrations.AlterField(
             model_name='medicine',
@@ -68,7 +77,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='medicine',
             name='origin_country',
-            field=models.CharField(blank=True, db_column='OriginCountry', max_length=255, null=True, verbose_name='Страна происхождения'),
+            field=models.CharField(
+                blank=True, db_column='OriginCountry', max_length=255, null=True, verbose_name='Страна происхождения'
+            ),
         ),
         migrations.AlterField(
             model_name='medicine',
@@ -83,27 +94,37 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='medicine',
             name='pharmacological_effect',
-            field=models.TextField(blank=True, db_column='PharmacologicalEffect', null=True, verbose_name='Фармакологическое действие'),
+            field=models.TextField(
+                blank=True, db_column='PharmacologicalEffect', null=True, verbose_name='Фармакологическое действие'
+            ),
         ),
         migrations.AlterField(
             model_name='medicine',
             name='pregnancy_usage',
-            field=models.TextField(blank=True, db_column='PregnancyUsage', null=True, verbose_name='Применение при беременности'),
+            field=models.TextField(
+                blank=True, db_column='PregnancyUsage', null=True, verbose_name='Применение при беременности'
+            ),
         ),
         migrations.AlterField(
             model_name='medicine',
             name='quantity_in_package',
-            field=models.TextField(blank=True, db_column='QuantityInPackage', null=True, verbose_name='Количество в упаковке'),
+            field=models.TextField(
+                blank=True, db_column='QuantityInPackage', null=True, verbose_name='Количество в упаковке'
+            ),
         ),
         migrations.AlterField(
             model_name='medicine',
             name='release_form',
-            field=models.CharField(blank=True, db_column='ReleaseForm', max_length=255, null=True, verbose_name='Форма выпуска'),
+            field=models.CharField(
+                blank=True, db_column='ReleaseForm', max_length=255, null=True, verbose_name='Форма выпуска'
+            ),
         ),
         migrations.AlterField(
             model_name='medicine',
             name='safety_precautions',
-            field=models.TextField(blank=True, db_column='SafetyPrecautions', null=True, verbose_name='Меры предосторожности'),
+            field=models.TextField(
+                blank=True, db_column='SafetyPrecautions', null=True, verbose_name='Меры предосторожности'
+            ),
         ),
         migrations.AlterField(
             model_name='medicine',
@@ -113,17 +134,23 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='medicine',
             name='special_instructions',
-            field=models.TextField(blank=True, db_column='SpecialInstructions', null=True, verbose_name='Особые указания'),
+            field=models.TextField(
+                blank=True, db_column='SpecialInstructions', null=True, verbose_name='Особые указания'
+            ),
         ),
         migrations.AlterField(
             model_name='medicine',
             name='storage_conditions',
-            field=models.TextField(blank=True, db_column='StorageConditions', null=True, verbose_name='Условия хранения'),
+            field=models.TextField(
+                blank=True, db_column='StorageConditions', null=True, verbose_name='Условия хранения'
+            ),
         ),
         migrations.AlterField(
             model_name='medicine',
             name='vacation_procedure',
-            field=models.TextField(blank=True, db_column='VacationProcedure', null=True, verbose_name='Порядок отпуска'),
+            field=models.TextField(
+                blank=True, db_column='VacationProcedure', null=True, verbose_name='Порядок отпуска'
+            ),
         ),
         migrations.AlterModelTable(
             name='medicine',

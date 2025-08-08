@@ -148,5 +148,5 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.AdminRenderer',
     ],
     'PAGE_SIZE': 20,
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination'
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 }

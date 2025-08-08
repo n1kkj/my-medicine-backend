@@ -1,7 +1,7 @@
 from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import render
 from django.utils.http import urlsafe_base64_decode
-from drf_yasg import openapi
+
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -195,3 +195,41 @@ class AuthViewSet(viewsets.ViewSet):
             'password_reset_form.html',
             {'uidb64': uidb64, 'token': token, 'error': error, 'valid_link': valid_link},
         )
+
+    @swagger_auto_schema(
+        method='post',
+        request_body=EmailSerializer,
+        responses={200: SuccessResponseSerializer, 400: ErrorResponseSerializer},
+    )
+    @action(detail=False, methods=['post'], url_path='request-account-deletion')
+    def request_account_deletion(self, request):
+        """Запрос на удаление аккаунта (отправка письма с подтверждением)"""
+        serializer = EmailSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response({'error': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+        email = serializer.validated_data['email']
+        AuthService.send_account_deletion_email(email)
+        return Response({'success': True, 'message': 'Письмо с подтверждением удаления отправлено на ваш email'})
+
+    @swagger_auto_schema(
+        method='get',
+        responses={
+            200: SuccessResponseSerializer,
+            400: ErrorResponseSerializer,
+        },
+    )
+    @action(detail=False, methods=['get'], url_path='confirm-account-deletion/(?P<uidb64>[^/.]+)/(?P<token>[^/.]+)')
+    def confirm_account_deletion(self, request, uidb64, token):
+        """Подтверждение удаления аккаунта"""
+        try:
+            uid = urlsafe_base64_decode(uidb64).decode()
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            return Response({'error': 'Неверная ссылка подтверждения.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if default_token_generator.check_token(user, token):
+            user.delete()
+            return Response({'success': True, 'message': 'Аккаунт успешно удален'}, status=status.HTTP_200_OK)
+
+        return Response({'error': 'Неверная ссылка подтверждения.'}, status=status.HTTP_400_BAD_REQUEST)

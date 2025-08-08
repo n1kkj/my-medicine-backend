@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('app', '0006_alter_medicine_barcodes'),
     ]
@@ -13,16 +12,22 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='medicine',
             name='image_path',
-            field=models.TextField(blank=True, db_column='ImagePath', max_length=255, null=True, verbose_name='Путь к изображению'),
+            field=models.TextField(
+                blank=True, db_column='ImagePath', max_length=255, null=True, verbose_name='Путь к изображению'
+            ),
         ),
         migrations.AlterField(
             model_name='medicine',
             name='origin_country',
-            field=models.TextField(blank=True, db_column='OriginCountry', max_length=255, null=True, verbose_name='Страна происхождения'),
+            field=models.TextField(
+                blank=True, db_column='OriginCountry', max_length=255, null=True, verbose_name='Страна происхождения'
+            ),
         ),
         migrations.AlterField(
             model_name='medicine',
             name='release_form',
-            field=models.TextField(blank=True, db_column='ReleaseForm', max_length=255, null=True, verbose_name='Форма выпуска'),
+            field=models.TextField(
+                blank=True, db_column='ReleaseForm', max_length=255, null=True, verbose_name='Форма выпуска'
+            ),
         ),
     ]
